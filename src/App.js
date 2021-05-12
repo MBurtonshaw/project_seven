@@ -40,7 +40,7 @@ render() {
           <SearchForm onSearch={this.performSearch}/>
           <Switch>
             <Route exact path="/" component={() => <Redirect to = "./Home"/>} />
-            <Route path="/Home" component={() => <Home data={this.state.pics} />} />
+            <Route path="/Home" component={() => <Home data={this.state.pics} onSearch={this.performSearch} />} />
             <Route path="/Cats" component={Home} />
             <Route path="/Dogs" component={Home} />
             <Route path="/Computers" component={Home} />
