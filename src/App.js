@@ -6,6 +6,9 @@ import api from "./components/Config";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import SearchForm from "./components/SearchForm";
+import Cats from "./components/Cats";
+import Dogs from "./components/Dogs";
+import Birds from "./components/Birds";
 
 class App extends Component {
   constructor() {
@@ -13,37 +16,44 @@ class App extends Component {
     this.state = {
       pics: [
         
-      ]
+      ],
+      header: ""
     }
   }
 
 componentDidMount() {
-    this.performSearch("art");
+    this.performSearch("nature");
+}
+
+performSearch(query) {
+  axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
+    if (response.data.photos.total > 0) {
+      this.setState({ pics: response.data.photos.photo });
+      this.setState({ header: query });
+    } else {
+      return(<NotFound />)
+    }
+
+  })
 }
 
 
-performSearch(query) {
-  axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${api}&tags=${query}&per_page=24&format=json&nojsoncallback=1`).then(response => {
-  this.setState({pics: response.data.photos.photo});
-  }).catch(
-     error => console.log(error)
-   )
-  }
-
-
+/*
+  Add a /search/ url parameter to the function? Then add a corresponding route.
+*/
 
 render() {
-{/* By having the main path not set to "exact path", I think the NavLinks will always point to Home component regardless of url, which should display the results component with dynamically loaded pictures */}
     return (
       <BrowserRouter>
         <div className="container">
-        <SearchForm onSearch={this.performSearch}/>
+        <h1>Picture Search</h1>
+        <SearchForm onSearch={ this.performSearch.bind(this) }/>
           <Switch>
-            <Route path="/" component={() => <Home data={this.state.pics} /> } />
-            <Route path="/cats" component={() => <Home data={this.state.pics} />} />
-            <Route path="/dogs" component={() => <Home data={this.state.pics} />} />
-            <Route path="/computers" component={() => <Home data={this.state.pics} />} />
-            <Route component={NotFound} />
+            <Route exact path="/" component={ () => <Home data={ this.state.pics } header={ this.state.header } /> } />
+            <Route path="/cats" component={ () => <Cats data={ this.state.pics } header={ this.state.header } /> } />
+            <Route path="/dogs" component={ () => <Dogs data={ this.state.pics } header={ this.state.header } /> } />
+            <Route path="/birds" component={ () => <Birds data={ this.state.pics } header={ this.state.header } /> } />
+            <Route component={ NotFound } />
           </Switch>
         </div>
         
@@ -53,3 +63,6 @@ render() {
 }
 
 export default App;
+/*
+Get url to dynamically match searchText
+*/
