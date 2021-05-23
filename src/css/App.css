@@ -50,18 +50,65 @@ input {
   margin-bottom: 1em;
 }
 
-.main-nav a {
+/*.main_nav {
   display: block;
   background: #438bbd;
   border-radius: 3px;
   padding: 5px;
   color: #fff;
+} */
+
+
+.first_nav {
+  display: block;
+  background: #48c96e;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
 }
 
-.main-nav .active,
-.main-nav a:hover,
+.second_nav {
+  display: block;
+  background: #c34cce;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
+.third_nav {
+  display: block;
+  background: #d3784e;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
+.first_nav:hover, .first_nav_active {
+  display: block;
+  background: #2c964c;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
+.second_nav:hover, .second_nav_active {
+  display: block;
+  background: #95309e;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
+.third_nav:hover, .third_nav_active {
+  display: block;
+  background: #b85f36;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
 .search-form button:hover {
-  background-color: #275270;
+  background-color: #366f97;
 }
 
 .photo-container ul {
