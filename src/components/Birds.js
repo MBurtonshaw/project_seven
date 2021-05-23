@@ -1,7 +1,7 @@
 import React from "react";
 import Results from "./Results";
 
-const Home = (props) => {
+const Birds = (props) => {
     return(
     <div className="home-container">
         <div className="photo-container">
@@ -11,4 +11,4 @@ const Home = (props) => {
     );
 };
 
-export default Home;
+export default Birds;
