@@ -9,6 +9,7 @@ import SearchForm from "./components/SearchForm";
 import Cats from "./components/Cats";
 import Dogs from "./components/Dogs";
 import Birds from "./components/Birds";
+import Search from "./components/Search";
 
 class App extends Component {
   constructor() {
@@ -25,6 +26,11 @@ componentDidMount() {
     this.performSearch("nature");
 }
 
+clearState = () => {
+  this.setState({ header: "" });
+  this.setState({ pics: "" });
+}
+
 performSearch(query) {
   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
     if (response.data.photos.total > 0) {
@@ -37,22 +43,18 @@ performSearch(query) {
   })
 }
 
-
-/*
-  Add a /search/ url parameter to the function? Then add a corresponding route.
-*/
-
 render() {
     return (
       <BrowserRouter>
         <div className="container">
         <h1>Picture Search</h1>
-        <SearchForm onSearch={ this.performSearch.bind(this) }/>
+        <SearchForm onSearch={ this.performSearch.bind(this) } />
           <Switch>
             <Route exact path="/" component={ () => <Home data={ this.state.pics } header={ this.state.header } /> } />
             <Route path="/cats" component={ () => <Cats data={ this.state.pics } header={ this.state.header } /> } />
             <Route path="/dogs" component={ () => <Dogs data={ this.state.pics } header={ this.state.header } /> } />
             <Route path="/birds" component={ () => <Birds data={ this.state.pics } header={ this.state.header } /> } />
+            <Route path="/search" component={ () => < Search data={ this.state.pics } header={ this.state.header } /> } />
             <Route component={ NotFound } />
           </Switch>
         </div>
@@ -63,6 +65,3 @@ render() {
 }
 
 export default App;
-/*
-Get url to dynamically match searchText
-*/
