@@ -1,5 +1,6 @@
 import { React, Component } from "react";
 import Pic from "./Pic";
+import NotFound from "./NotFound";
 
 class Results extends Component {
   componentDidMount() {
@@ -8,6 +9,9 @@ class Results extends Component {
   render() {
     const results = this.props.data;
     let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
+    if (this.props.data.length <= 0) {
+      return(<NotFound/>);
+    }
     return(
       <div className="home-container">
         <div className="photo-container">
