@@ -2,41 +2,23 @@ import './css/App.css';
 import React, { Component } from "react";
 import NotFound from "./components/NotFound";
 import Results from "./components/Results";
-import api from "./components/Config";
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import SearchForm from "./components/SearchForm";
+import hashHistory from "react";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      pics: [
-        
-      ],
-      query: ""
-    }
-  }
-
-  componentDidMount() {
-    this.performSearch("nature");
-  }
-
-performSearch = (query) => {
-  axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-      this.setState({ pics: response.data.photos.photo });
-      this.setState({ query: query });
-  })
-}
 
 render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter history={hashHistory}>
         <div className="container">
         <h1>Picture Search</h1>
-        <SearchForm onSearch={ this.performSearch } query={ this.state.query } data={ this.state.pics } />
           <Switch>
-            <Route path="/" component={ () => <Results onSearch={ this.performSearch } query={ this.state.query } data={this.state.pics} /> } />
+            <Route exact path="/" component={ () => <Results /> } />
+            <Route path="/cats" component={ () => <Results header={ "cats" } /> } />
+            <Route path="/dogs" component={ () => <Results header={ "dogs" }/> } />
+            <Route path="/birds" component={ () => <Results header={ "birds" }/> } />
+            <Route path="/search/:term" component={ () => <Results /> } />
             <Route component={ NotFound } />
           </Switch>
         </div>
