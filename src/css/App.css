@@ -2,6 +2,12 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
+  background-color: #ebfff5;
+}
+
+.photo-container {
+  background-color: #9fd8c0;
+  padding: 2em;
 }
 
 h2 {
