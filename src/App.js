@@ -1,7 +1,7 @@
 import './css/App.css';
 import React, { Component } from "react";
 import NotFound from "./components/NotFound";
-import Results from "./components/Results";
+import Main from "./components/Main";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import hashHistory from "react";
@@ -14,11 +14,11 @@ render() {
         <div className="container">
         <h1>Picture Search</h1>
           <Switch>
-            <Route exact path="/" component={ () => <Results /> } />
-            <Route path="/cats" component={ () => <Results header={ "cats" } /> } />
-            <Route path="/dogs" component={ () => <Results header={ "dogs" }/> } />
-            <Route path="/birds" component={ () => <Results header={ "birds" }/> } />
-            <Route path="/search/:term" component={ () => <Results /> } />
+            <Route exact path="/" component={ () => <Main /> } />
+            <Route path="/cats" component={ () => <Main header={ "cats" } /> } />
+            <Route path="/dogs" component={ () => <Main header={ "dogs" }/> } />
+            <Route path="/birds" component={ () => <Main header={ "birds" }/> } />
+            <Route path="/search/:term" component={ () => <Main /> } />
             <Route component={ NotFound } />
           </Switch>
         </div>
