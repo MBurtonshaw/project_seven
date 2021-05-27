@@ -2,7 +2,6 @@ import './css/App.css';
 import React, { Component } from "react";
 import NotFound from "./components/NotFound";
 import Main from "./components/Main";
-
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import hashHistory from "react";
 
