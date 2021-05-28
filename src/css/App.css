@@ -8,6 +8,7 @@ body {
 .photo-container {
   background-color: #9fd8c0;
   padding: 2em;
+  border-radius: 2%;
 }
 
 h2 {
@@ -43,9 +44,9 @@ a {
 input {
   font-size: 1em;
   width: 100%;
-  background-color: #edeff0;
+  background-color: #f5f7f8;
   padding: 10px 15px;
-  border: 3px solid #d7dbdf;
+  border: 3px solid #9fd8c0;;
   border-right: none;
   border-radius: 0.35em 0 0 0.35em;
   outline: none;
@@ -130,12 +131,14 @@ input {
   height: 165px;
   overflow: hidden;
   margin-bottom: 15px;
+  border-radius: 3%;
 }
 
 .photo-container ul img {
   width: 100%;
   transform: scale(1.25);
   transition: transform 1.25s;
+  
 }
 
 .photo-container li:hover img {
