@@ -21,7 +21,7 @@ render() {
             <Route path="/cats" component={ () => <Main header={ "cats" } /> } />
             <Route path="/dogs" component={ () => <Main header={ "dogs" }/> } />
             <Route path="/birds" component={ () => <Main header={ "birds" }/> } />
-            <Route path="/search/:term" component={ () => <Main /> } />
+            <Route path="/:term" component={ () => <Main /> } />
 
             {/* 404 Error- in progress */}
             <Route component={ NotFound } />
