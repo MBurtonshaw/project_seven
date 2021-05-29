@@ -6,6 +6,7 @@ import axios from "axios";
 import SearchForm from "./SearchForm";
 
 class Main extends Component {
+  _isMounted = false;
   constructor() {
     super();
     this.state = {
@@ -22,25 +23,25 @@ class Main extends Component {
 //This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
 //If nothing was passed down, for example when the page first loads, "nature" is the default header
   componentDidMount() {
+    this._isMounted = true;
     this.setState({ query: this.props.header });
-    if (this.props.header === "cats") {
-      this.performSearch("cats");
-    } else if (this.props.header === "dogs") {
-      this.performSearch("dogs");
-    } else if (this.props.header === "birds") {
-      this.performSearch("birds");
-    } else {
-      this.performSearch("nature");
-    } 
+    this.performSearch(this.props.header);
   }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
   performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-        this.setState({ pics: response.data.photos.photo });
-        this.setState({ query: query });
+        if (this._isMounted) {
+          this.setState({ isLoading: true });
+          this.setState({ pics: response.data.photos.photo, query: query });
+          this.setState({ isLoading: false });
+        }
     })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   //Rendering the fetched pictures dynamically & mapping them to the browser
@@ -48,7 +49,7 @@ class Main extends Component {
   render() {
     const results = this.state.pics;
     let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
-    if (results.length <= 0 ) {
+    if (results.length <= 0 && this.state.isLoading === false ) {
       return(<NotFound />);
     }
     
