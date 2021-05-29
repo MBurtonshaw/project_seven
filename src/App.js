@@ -2,7 +2,7 @@ import './css/App.css';
 import React, { Component } from "react";
 import NotFound from "./components/NotFound";
 import Main from "./components/Main";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import api from "./components/Config";
 import axios from "axios";
 
@@ -38,8 +38,7 @@ render() {
 
           <Switch>
             {/* Home route */}
-            <Route exact path="/" component={ () => <Main header={this.state.query}/> } />
-
+            <Route exact path="/" component={ () => <Redirect to="/dogs" /> }/>
             {/* Headers passed down as props to initiate a search when Main.js is mounted */}
             {/* Also for NavLink purposes in SearchForm.js */}
             <Route path="/cats" component={ () => <Main header={ "cats" } /> } />
