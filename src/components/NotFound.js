@@ -1,10 +1,8 @@
 import React from "react";
-import SearchForm from "./SearchForm";
 
 const NotFound = () => (
     <div className="home-container">
 
-        <SearchForm />
         <h1>Oops</h1>
 
         <div className="photo-container">

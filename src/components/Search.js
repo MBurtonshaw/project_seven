@@ -4,7 +4,7 @@ import NotFound from "./NotFound";
 import api from "./Config";
 import axios from "axios";
 
-class Main extends Component {
+class Search extends Component {
   _isMounted = false;
   constructor() {
     super();
@@ -19,23 +19,20 @@ class Main extends Component {
   }
 
 //This is setting the header in state^ to the query passed down through props in App.js
-//This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
+//This is to catch when a page loads based on the search function
   componentDidMount() {
     this._isMounted = true;
     this.setState({ query: this.props.header });
-    this.mainPerformSearch(this.props.header);
+    this.mainPerformSearch(this.state.query);
   }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-  mainPerformSearch = (query) => {
-    if (!query) {
-      //query = this.props.match.params.id;
-    }
+  mainPerformSearch = (query = this.props.header) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
         if (this._isMounted) {
           this.setState({ isLoading: true });
-          this.setState({ pics: response.data.photos.photo, query: query });
+          this.setState({ pics: response.data.photos.photo });
           this.setState({ isLoading: false });
         }
     })
@@ -74,4 +71,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Search;

@@ -13,11 +13,12 @@ class SearchForm extends Component {
 
     //Handles the form submission; initiates a search of the query then pushes it to the url
     handleSubmit = e => {
-        let search = document.getElementById("form_input").value;
+        let search = this.state.searchText;
         e.preventDefault();
         this.props.onSearch(search);
         let path = `${search}`;
         this.props.history.push(path);
+        
         e.currentTarget.reset();
     }
     render() {
