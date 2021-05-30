@@ -25,8 +25,9 @@ class Search extends Component {
         <div className="photo-container">
           <ul>
 
-            {/* Mapping out the pictures */}
+
             { list }
+          
 
           </ul>
         </div>

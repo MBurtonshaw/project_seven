@@ -42,7 +42,7 @@ class Main extends Component {
     const results = this.state.pics;
     let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
     
-    if (results.length <= 0 ) {
+    if (results.length === 0) {
       return(<NotFound />);
     }
     
