@@ -1,8 +1,6 @@
 import { React, Component} from "react";
 import Pic from "./Pic";
 import NotFound from "./NotFound";
-import api from "./Config";
-import axios from "axios";
 
 class Search extends Component {
   _isMounted = false;
@@ -23,19 +21,7 @@ class Search extends Component {
   componentDidMount() {
     this._isMounted = true;
     this.setState({ query: this.props.header });
-    this.mainPerformSearch(this.state.query);
-  }
-
-//Search function sending an axios request to fetch data from flikr based on the search query
-//The resulting pictures and the query are saved to state
-  mainPerformSearch = (query = this.props.header) => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-        if (this._isMounted) {
-          this.setState({ isLoading: true });
-          this.setState({ pics: response.data.photos.photo });
-          this.setState({ isLoading: false });
-        }
-    })
+    this.setState({ pics: this.props.data });
   }
 
   componentWillUnmount() {

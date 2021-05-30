@@ -23,12 +23,12 @@ class Main extends Component {
   componentDidMount() {
     this._isMounted = true;
     this.setState({ query: this.props.header });
-    this.mainPerformSearch(this.props.header);
+    this.performSearch_fromMain(this.props.header);
   }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-  mainPerformSearch = (query) => {
+  performSearch_fromMain = (query) => {
     if (!query) {
       //query = this.props.match.params.id;
     }
