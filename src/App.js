@@ -1,60 +1,54 @@
-import './css/App.css';
-import React, { Component } from "react";
-import NotFound from "./components/NotFound";
-import Main from "./components/Main";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import api from "./components/Config";
-import axios from "axios";
-import SearchForm from "./components/SearchForm";
-import Search from "./components/Search";
+import React, { Component } from 'react';
+import './App.css';
+import axios from 'axios';
+import SearchForm from './Components/SearchForm';
+import GifList from './Components/GifList';
 
-class App extends Component {
+export default class App extends Component {
+  
   constructor() {
     super();
     this.state = {
-      query: "",
-      pics: [
+      gifs: [],
+      loading: true
+    };
+  } 
 
-      ]
-    }
+  componentDidMount() {
+    this.performSearch();
   }
-
-//Search function sending an axios request to fetch data from flikr based on the search query
-//The resulting pictures and the query are saved to state
-performSearch_fromApp = (query) => {
-  axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-        this.setState({ query: query });
-        this.setState({ pics: response.data.photos.photo });
-  })
-}
-
-render() {
+  
+  performSearch = (query = 'cats') => {
+    axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`)
+      .then(response => {
+        this.setState({
+          gifs: response.data.data,
+          loading: false
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });    
+  }
+  
+  render() { 
+    console.log(this.state.gifs);
     return (
-      <BrowserRouter>
-        <div className="container">
-        
-        <h1>Picture Search</h1>
-        <SearchForm onSearch={ this.performSearch_fromApp} />
-
-          <Switch>
-            {/* Home route */}
-            <Route exact path="/" component={ () => <Redirect to="/dogs" /> }/>
-
-            {/* Headers passed down as props to initiate a search when Main.js is mounted */}
-            {/* Also for NavLink purposes in SearchForm.js */}
-            <Route exact path="/cats" component={ () => <Main header={ "cats" } /> } />
-            <Route exact path="/dogs" component={ () => <Main header={ "dogs" } /> } />
-            <Route exact path="/birds" component={ () => <Main header={ "birds" } /> } />
-            <Route path="/:term" component={ () => <Search header={ this.state.query } data={ this.state.pics }/> } />
-
-            {/* 404 Error- in progress */}
-            <Route component={ NotFound } />
-          </Switch>
+      <div>
+        <div className="main-header">
+          <div className="inner">
+            <h1 className="main-title">GifSearch</h1>
+            <SearchForm onSearch={this.performSearch} />      
+          </div>   
+        </div>    
+        <div className="main-content">
+          {
+            (this.state.loading)
+             ? <p>Loading...</p>
+             : <GifList data={this.state.gifs} />
+          }          
         </div>
-        
-      </BrowserRouter>
+      </div>
     );
   }
 }
-
-export default App;
