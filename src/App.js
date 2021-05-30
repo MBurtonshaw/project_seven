@@ -20,7 +20,7 @@ class App extends Component {
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-appPerformSearch = (query) => {
+performSearch_fromApp = (query) => {
   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
       if (this._isMounted) {
         this.setState({ isLoading: true });
@@ -36,7 +36,7 @@ render() {
         <div className="container">
         
         <h1>Picture Search</h1>
-        <SearchForm onSearch={ this.appPerformSearch } query={ this.state.query }/>
+        <SearchForm onSearch={ this.performSearch_fromApp } query={ this.state.query }/>
 
           <Switch>
             {/* Home route */}
@@ -47,8 +47,8 @@ render() {
             <Route exact path="/cats" component={ () => <Main header={ "cats" } /> } />
             <Route exact path="/dogs" component={ () => <Main header={ "dogs" } /> } />
             <Route exact path="/birds" component={ () => <Main header={ "birds" } /> } />
-            <Route path="/:term" component={ () => <Search /> } />
-            
+            <Route path="/:term" component={ () => <Search header={ this.state.query } data={ this.state.pics }/> } />
+
             {/* 404 Error- in progress */}
             <Route component={ NotFound } />
           </Switch>
