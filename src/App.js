@@ -13,8 +13,9 @@ class App extends Component {
     super();
     this.state = {
       query: "",
-      //isLoading state - in progress
-      isLoading: false
+      pics: [
+
+      ]
     }
   }
 
@@ -22,11 +23,8 @@ class App extends Component {
 //The resulting pictures and the query are saved to state
 performSearch_fromApp = (query) => {
   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-      if (this._isMounted) {
-        this.setState({ isLoading: true });
         this.setState({ query: query });
-        this.setState({ isLoading: false });
-      }
+        this.setState({ pics: response.data.photos.photo });
   })
 }
 
@@ -36,7 +34,7 @@ render() {
         <div className="container">
         
         <h1>Picture Search</h1>
-        <SearchForm onSearch={ this.performSearch_fromApp } query={ this.state.query }/>
+        <SearchForm onSearch={ this.performSearch_fromApp} />
 
           <Switch>
             {/* Home route */}
