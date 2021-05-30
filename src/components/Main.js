@@ -11,10 +11,7 @@ class Main extends Component {
     this.state = {
       pics: [
         
-      ],
-      query: "",
-      //isLoading state - in progress
-      isLoading: false
+      ]
     }
   }
 
@@ -22,21 +19,15 @@ class Main extends Component {
 //This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
   componentDidMount() {
     this._isMounted = true;
-    this.setState({ query: this.props.header });
     this.performSearch_fromMain(this.props.header);
   }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
   performSearch_fromMain = (query) => {
-    if (!query) {
-      //query = this.props.match.params.id;
-    }
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
         if (this._isMounted) {
-          this.setState({ isLoading: true });
           this.setState({ pics: response.data.photos.photo, query: query });
-          this.setState({ isLoading: false });
         }
     })
   }
@@ -50,7 +41,8 @@ class Main extends Component {
   render() {
     const results = this.state.pics;
     let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
-    if (results.length <= 0 && this.state.isLoading === false ) {
+    
+    if (results.length <= 0 ) {
       return(<NotFound />);
     }
     
@@ -67,6 +59,7 @@ class Main extends Component {
 
             {/* Mapping out the pictures */}
             { list }
+
           </ul>
         </div>
       </div>

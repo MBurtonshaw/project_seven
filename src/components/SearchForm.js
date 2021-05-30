@@ -18,12 +18,14 @@ class SearchForm extends Component {
         this.props.onSearch(search);
         let path = `${search}`;
         this.props.history.push(path);
-        
         e.currentTarget.reset();
     }
+
     render() {
         return(
             <div>
+
+                {/* Form element */}
                 <form className="search-form" onSubmit={ this.handleSubmit }>
                     <input type="search" id={ "form_input" } onChange={ this.onSearchChange } name="search" placeholder="Search" required/>
                     <button type="submit" className="search-button" >
@@ -33,14 +35,16 @@ class SearchForm extends Component {
                     </svg>
                     </button>
                 </form>
+
+                {/* NavLinks, for style */}
                 <nav className="main-nav">
                     <ul>
-                        {/* NavLinks, for style */}
                         <li><NavLink to="/cats" className="first_nav" activeClassName="first_nav_active" >Cats</NavLink></li>
                         <li><NavLink to="/dogs" className="second_nav" activeClassName="second_nav_active" >Dogs</NavLink></li>
                         <li><NavLink to="/birds" className="third_nav" activeClassName="third_nav_active" >Birds</NavLink></li>
                     </ul>
                 </nav>
+
             </div>
 
         );
