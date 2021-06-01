@@ -3,13 +3,13 @@ import React from "react";
 const NotFound = () => (
     <div className="home-container">
 
-        <h1>Oops</h1>
+        <h2>Oops</h2>
 
         <div className="photo-container">
 
             <div>
-                <h1>Not Found</h1>
-                <h2>This search query has returned no results</h2>
+                <h2>Not Found</h2>
+                <h3>This search query has returned no results</h3>
             </div>
             
         </div>

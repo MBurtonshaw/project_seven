@@ -8,10 +8,12 @@ class Search extends Component {
   //Rendering the fetched pictures dynamically & mapping them to the browser
   //If there are no results, the NotFound component is returned
     const results = this.props.data;
-    let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
+    let list = results.map( pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
     
-    if (results.length <= 0 ) {
-      return(<NotFound />);
+    if ( this.props.isLoading === true ) {
+      return( <h1>Loading...</h1> );
+    } else if ( results.length <= 0 ) {
+      return( <NotFound /> );
     }
     
     return(
@@ -25,9 +27,7 @@ class Search extends Component {
         <div className="photo-container">
           <ul>
 
-
             { list }
-          
 
           </ul>
         </div>

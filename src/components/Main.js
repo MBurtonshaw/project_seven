@@ -1,6 +1,5 @@
 import { React, Component} from "react";
 import Pic from "./Pic";
-import NotFound from "./NotFound";
 import api from "./Config";
 import axios from "axios";
 
@@ -40,10 +39,10 @@ class Main extends Component {
   //If there are no results, the NotFound component is returned
   render() {
     const results = this.state.pics;
-    let list = results.map(pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/>);
+    let list = results.map( pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/> );
     
-    if (results.length === 0) {
-      return(<NotFound />);
+    if ( results.length === 0 ) {
+      return( <h1>Loading...</h1> );
     }
     
     return(
