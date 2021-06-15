@@ -1,4 +1,4 @@
-import { React, Component} from "react";
+import { React, Component } from "react";
 import Pic from "./Pic";
 import api from "./Config";
 import axios from "axios";
