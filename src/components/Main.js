@@ -1,4 +1,5 @@
 import { React, Component } from "react";
+import { withRouter } from "react-router-dom";
 import Pic from "./Pic";
 import api from "./Config";
 import axios from "axios";
@@ -20,8 +21,16 @@ class Main extends Component {
   componentDidMount() {
       this._isMounted = true;
       this.performSearch_fromMain(this.props.header);
-      console.log(this.props);
 }
+
+  componentDidUpdate(prevProps, prevState) {
+      if (prevProps.location.pathname !== this.props.location.pathname) {
+        console.log('yatta');
+        let searchTerm = this.props.location.pathname;
+        let refined = searchTerm.substr(1, searchTerm.length);
+        this.performSearch_fromMain(refined);
+      }
+  }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
@@ -67,4 +76,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(Main);
