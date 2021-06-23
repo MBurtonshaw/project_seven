@@ -16,7 +16,7 @@ class App extends Component {
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-performSearch_fromApp = (query) => {
+messenger = (query) => {
         this.setState({ isLoading: true }, () => {     
         this.setState({ query: query });
         this.setState({ isLoading: false });
@@ -29,19 +29,24 @@ render() {
         <div className="container">
         
         <h1>Picture Search</h1>
-          <SearchForm onSearch={this.performSearch_fromApp}/>
+
+          {/* Passing down function to SearchForm.js to retrieve the search query and then pass it to Main.js */}
+          <SearchForm onSearch={this.messenger}/>
+
           <Switch>
             {/* Home route */}
             <Route exact path="/" component={ () => <Redirect to="/dogs" /> }/>
 
             {/* Headers passed down as props to initiate a search when Main.js is mounted */}
             {/* Also for NavLink purposes in SearchForm.js */}
+            {/* :term route is rendered conditionally based on a search query in SearchForm.js */}
+            {/* This search query is passed down as a header to Main.js as well */}
             <Route exact path="/cats" component={ () => <Main header={ "cats" } /> } />
             <Route exact path="/dogs" component={ () => <Main header={ "dogs" } /> } />
             <Route exact path="/birds" component={ () => <Main header={ "birds" } /> } />
             <Route path="/:term" component={ () => <Main header={this.state.query}/> } />
 
-            {/* 404 Error- in progress */}
+            {/* 404 Error */}
             <Route component={ NotFound } />
           </Switch>
         </div>
