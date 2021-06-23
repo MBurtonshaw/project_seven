@@ -10,9 +10,6 @@ class App extends Component {
     super();
     this.state = {
       query: "",
-      pics: [
-
-      ],
       isLoading: false
     }
   }
