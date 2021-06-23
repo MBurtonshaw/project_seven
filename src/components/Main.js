@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import Pic from "./Pic";
 import api from "./Config";
 import axios from "axios";
+import NotFound from "./NotFound";
 
 class Main extends Component {
   _isMounted = false;
@@ -12,7 +13,8 @@ class Main extends Component {
       query: "",
       pics: [
         
-      ]
+      ],
+      isLoading: false
     }
   }
 
@@ -35,9 +37,11 @@ class Main extends Component {
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
   performSearch_fromMain = (query) => {
+    this.setState({ isLoading: true });
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
         if (this._isMounted) {
           this.setState({ pics: response.data.photos.photo, query: query });
+          this.setState({ isLoading: false });
         }
     })
   }
@@ -52,8 +56,10 @@ class Main extends Component {
     const results = this.state.pics;
     let list = results.map( pic => <Pic title={ pic.title } src={ `https://live.staticflickr.com/${ pic.server }/${ pic.id }_${ pic.secret }_w.jpg` } key={ pic.id }/> );
     
-    if ( results.length === 0 ) {
+    if ( results.length === 0 && this.state.isLoading === true ) {
       return( <h1>Loading...</h1> );
+    } else if ( results.length === 0 ) {
+      return(<NotFound />);
     }
     
     return(
