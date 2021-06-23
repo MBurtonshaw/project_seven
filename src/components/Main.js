@@ -8,6 +8,7 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
+      query: "",
       pics: [
         
       ]
@@ -17,9 +18,10 @@ class Main extends Component {
 //This is setting the header in state^ to the query passed down through props in App.js
 //This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
   componentDidMount() {
-    this._isMounted = true;
-    this.performSearch_fromMain(this.props.header);
-  }
+      this._isMounted = true;
+      this.performSearch_fromMain(this.props.header);
+      console.log(this.props);
+}
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
@@ -47,7 +49,6 @@ class Main extends Component {
     
     return(
       <div className="home-container">
-
         {/* Dynamically changing the header based on the search query in state */}
         <h2> {
             this.state.query

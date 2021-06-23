@@ -20,6 +20,7 @@ class SearchForm extends Component {
         this.props.history.push( path );
         e.currentTarget.reset();
     }
+
     render() {
         return(
             <div>
