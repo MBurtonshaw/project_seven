@@ -1,3 +1,9 @@
+Hello.
+
+Config is required in Main.js. It will be looking for the "Config.js" file in the components folder. It's exported as "api".
+
+To use the app, either type a search or use the Nav links. Pages will render dynamically (data from Flikr) and the search term will match the url.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
