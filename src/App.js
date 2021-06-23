@@ -14,10 +14,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.performSearch_fromApp();
-  }
-
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
 performSearch_fromApp = (query) => {
