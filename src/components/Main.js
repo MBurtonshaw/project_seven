@@ -22,21 +22,21 @@ class Main extends Component {
 //This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
   componentDidMount() {
       this._isMounted = true;
-      this.performSearch_fromMain(this.props.header);
+      this.searcher(this.props.header);
 }
 
+//This is to allow the component to update based on the current search query, regardless of url changing or not
   componentDidUpdate(prevProps, prevState) {
       if (prevProps.location.pathname !== this.props.location.pathname) {
-        console.log('yatta');
         let searchTerm = this.props.location.pathname;
         let refined = searchTerm.substr(1, searchTerm.length);
-        this.performSearch_fromMain(refined);
+        this.searcher(refined);
       }
   }
 
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-  performSearch_fromMain = (query) => {
+  searcher = (query) => {
     this.setState({ isLoading: true });
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
         if (this._isMounted) {
@@ -51,6 +51,7 @@ class Main extends Component {
   }
 
   //Rendering the fetched pictures dynamically & mapping them to the browser
+  //Renders a conditional loading message
   //If there are no results, the NotFound component is returned
   render() {
     const results = this.state.pics;
