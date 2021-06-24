@@ -21,7 +21,6 @@ class Main extends Component {
 //This is setting the header in state^ to the query passed down through props in App.js
 //This is to catch when a page loads based on a click of the NavLinks on SearchForm.js
   componentDidMount() {
-      this._isMounted = true;
       this.searcher(this.props.header);
 }
 
@@ -30,6 +29,7 @@ class Main extends Component {
       if (prevProps.location.pathname !== this.props.location.pathname) {
         let searchTerm = this.props.location.pathname;
         let refined = searchTerm.substr(1, searchTerm.length);
+        this.setState({ query: refined });
         this.searcher(refined);
       }
   }
@@ -37,17 +37,19 @@ class Main extends Component {
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
   searcher = (query) => {
-    this.setState({ isLoading: true });
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-        if (this._isMounted) {
-          this.setState({ pics: response.data.photos.photo, query: query });
-          this.setState({ isLoading: false });
-        }
-    })
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
+    if (query) {
+      this.setState({ isLoading: true }, () => {
+      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
+            console.log(response);
+            this.setState({ pics: response.data.photos.photo, query: query });
+            this.setState({ isLoading: false });
+        });
+      })
+    } else if (!query) {
+      query = this.props.location.pathname;
+    } else {
+      return(<NotFound />);
+    }
   }
 
   //Rendering the fetched pictures dynamically & mapping them to the browser
