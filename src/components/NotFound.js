@@ -8,7 +8,7 @@ const NotFound = () => (
         <div className="photo-container">
 
             <div>
-                <h2>Not Found</h2>
+                <h3>Not Found</h3>
                 <h3>This search query has returned no results</h3>
             </div>
             
