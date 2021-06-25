@@ -37,18 +37,15 @@ class Main extends Component {
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
   searcher = (query) => {
-    if (query) {
-      this.setState({ isLoading: true }, () => {
-      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
-            console.log(response);
-            this.setState({ pics: response.data.photos.photo, query: query });
-            this.setState({ isLoading: false });
-        });
-      })
-    } else if (!query) {
+    if (!query) {
       query = this.props.location.pathname;
-    } else {
-      return(<NotFound />);
+      }  else {
+      this.setState({ isLoading: true }, () => {
+        axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${ api }&tags=${ query }&per_page=24&format=json&nojsoncallback=1`).then(response => {
+              this.setState({ pics: response.data.photos.photo, query: query });
+              this.setState({ isLoading: false });
+            })
+          });
     }
   }
 
