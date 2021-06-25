@@ -14,9 +14,16 @@ class App extends Component {
     }
   }
 
+  //Checking to see if there was a search executed without a url change
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query) {
+      this.messenger(this.state.query);
+    }
+  }
+
 //Search function sending an axios request to fetch data from flikr based on the search query
 //The resulting pictures and the query are saved to state
-messenger = (query) => {
+  messenger = (query) => {
         this.setState({ isLoading: true }, () => {     
         this.setState({ query: query });
         this.setState({ isLoading: false });
