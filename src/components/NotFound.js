@@ -1,10 +1,9 @@
 import React from "react";
 
 const NotFound = () => (
+
     <div className="home-container">
-
         <h2>Oops</h2>
-
         <div className="photo-container">
 
             <div>

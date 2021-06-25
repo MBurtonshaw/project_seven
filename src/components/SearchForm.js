@@ -3,7 +3,9 @@ import { NavLink, withRouter } from "react-router-dom";
 
 class SearchForm extends Component {
     state = {
+
         searchText: ""
+        
     }
 
     //Updating state as the user types the search query
@@ -13,10 +15,10 @@ class SearchForm extends Component {
 
     //Handles the form submission; initiates a search of the query then pushes it to the url
     handleSubmit = e => {
-        let search = this.state.searchText;
+        let _term = this.state.searchText;
         e.preventDefault();
-        this.props.onSearch( search );
-        let path = `${ search }`;
+        this.props.onSearch( _term );
+        let path = `${ _term }`;
         this.props.history.push( path );
         e.currentTarget.reset();
     }
