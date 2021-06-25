@@ -9,7 +9,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      
+
       app_query: "",
       isLoading: false
       
